@@ -1,14 +1,26 @@
 #include "test.h"
 #include "net.h"
 
-TEST_CASE("test_case_name")
+bool send(unsigned char * buffer, int size)
 {
 
-    unsigned char buffer[512];
+    return true;
+}
 
-    auto identify = net::aoe::issue::identify::Header(buffer);
+bool read(unsigned char * to, int sector)
+{
+    return true;
+}
 
+bool write(unsigned char * from, int sector)
+{
 
-    identify.serial_number = net::aoe::issue::identify::String_serial_number("1.1 en2");
+    return true;
+}
 
+TEST_CASE("test_case_name")
+{
+    auto server = net::aoe::stack::Server(1, 1, 128, send, read, write);
+
+    server.init();
 }

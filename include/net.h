@@ -14,5 +14,6 @@
 #include "net_aoe_query.h"
 #include "net_aoe_issue.h"
 #include "net_aoe_issue_identify.h"
+#include "net_aoe_stack_server.h"
 
 #endif /* define: net_h */
