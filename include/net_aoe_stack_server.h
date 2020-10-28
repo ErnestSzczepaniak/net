@@ -31,18 +31,23 @@ public:
     void process(unsigned char * data);
 
 protected:
+    bool _check_valid(unsigned char * data);
+
     void _fill_header_eth(const eth::address::Custom & destination);
     void _fill_header_aoe(unsigned char command, unsigned int tag);
-    void _fill_header_aoe_query();
+    void _fill_header_aoe_issue(unsigned int lba);
 
-    bool _check_valid(unsigned char * data);
+    void _respond_aoe_query();
+    void _respond_aoe_issue_identify();
+    void _respond_aoe_issue_read(unsigned char sector_count, unsigned int lba);
+    void _respond_aoe_issue_write(unsigned char sector_count, unsigned int lba);
 
 private:
     unsigned char _buffer[size_buffer];
 
     unsigned short int _major;
     unsigned char _minor;
-    unsigned char _sectors;
+    unsigned short int _sectors;
 
     Handler _send;
     Handler _read;
