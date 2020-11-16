@@ -1,7 +1,7 @@
 #include "test.h"
 #include "net.h"
 
-bool send(unsigned char * buffer, int size)
+bool send(unsigned char * buffer, int size, int timeout)
 {
 
     return true;
