@@ -23,4 +23,6 @@ TEST_CASE("test_case_name")
     auto server = net::aoe::stack::Server(1, 1, 128, send, read, write);
 
     server.init();
+
+    int k = 2;
 }
