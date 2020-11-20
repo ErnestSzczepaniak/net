@@ -17,7 +17,7 @@ set(private_definition_host     )
 
 # ---------------------------------------------| option |--------------------------------------------- #
 
-set(public_option_common        -Wno-write-strings)
+set(public_option_common        -Wno-write-strings -Wno-format-security)
 set(public_option_target        )
 set(public_option_host          )
 
