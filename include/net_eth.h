@@ -24,17 +24,16 @@ public:
     Custom() {}
     Custom(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4, unsigned char b5)
     {
-        _value[0] = b0;
-        _value[1] = b1;
-        _value[2] = b2;
-        _value[3] = b3;
-        _value[4] = b4;
-        _value[5] = b5;
+        value[0] = b0;
+        value[1] = b1;
+        value[2] = b2;
+        value[3] = b3;
+        value[4] = b4;
+        value[5] = b5;
     }
     ~Custom() {}
 
-private:
-    unsigned char _value[6];
+    unsigned char value[6];
 
 }; /* class: Address */
 

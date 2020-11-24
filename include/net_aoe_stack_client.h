@@ -9,28 +9,25 @@
  * @details	
 **/
 
-#include "net_eth.h"
+#include "net_aoe_stack_actor.h"
 
 namespace net::aoe::stack
 {
 
-class Client
+class Client : public Actor
 {
-    using Handler_receive = bool (*)(unsigned char *, int, int);
-
 public:
-    Client();
+    Client(net::interface::Io & interface_io);
 
-    void init();
+    bool connect();
 
     void read(unsigned char * to, int sector);
     void write(unsigned char * from, int sector);
 
 protected:
-    
+    eth::address::Custom _destination;
 
 private:
-    
 
 }; /* class: Client */
 

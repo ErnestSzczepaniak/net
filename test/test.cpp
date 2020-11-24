@@ -1,11 +1,48 @@
 #include "test.h"
 #include "net.h"
 
-bool send(unsigned char * buffer, int size, int timeout)
+class Interface_io : public net::interface::Io
 {
+public:
+    virtual int transmitt(unsigned char *, int, int)
+    {
 
-    return true;
-}
+    }
+    virtual int receive(unsigned char *, int)
+    {
+
+    }
+    virtual void print(char *)
+    {
+
+    }
+    virtual net::eth::address::Custom & address()
+    {
+
+    }
+
+}; /* class: Interface */
+
+class Interface_server : public net::aoe::stack::interface::Server
+{
+public:
+    virtual bool read(unsigned char *, int)
+    {
+
+    }
+
+    virtual bool write(unsigned char *, int)
+    {
+
+    }
+
+    virtual unsigned int sector_count()
+    {
+
+    }
+    
+}; /* class: Interface_server */
+
 
 bool read(unsigned char * to, int sector)
 {
@@ -18,11 +55,14 @@ bool write(unsigned char * from, int sector)
     return true;
 }
 
+
 TEST_CASE("test_case_name")
 {
-    auto server = net::aoe::stack::Server(1, 1, 128, send, read, write);
+    Interface_server interface_server;
+    Interface_io interface_io;
 
-    server.init();
+    auto server = net::aoe::stack::Server(interface_io, interface_server);
+
 
     int k = 2;
 }
