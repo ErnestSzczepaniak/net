@@ -33,6 +33,11 @@ public:
     }
     ~Custom() {}
 
+    void operator=(const Custom & other)
+    {
+        memcpy(value, other.value, 6);
+    }
+
     unsigned char value[6];
 
 }; /* class: Address */

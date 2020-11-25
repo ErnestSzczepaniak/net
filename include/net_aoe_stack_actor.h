@@ -31,7 +31,8 @@ protected:
     void _clear(unsigned char * buffer);
 
     bool _check_header_eth();
-    bool _check_header_aoe(bool response);
+    bool _check_header_aoe_request();
+    bool _check_header_aoe_response();
 
     void _fill_header_eth(const eth::address::Custom & destination);
     void _fill_header_aoe(bool response, unsigned char command, unsigned int tag);

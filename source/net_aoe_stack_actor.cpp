@@ -46,16 +46,28 @@ bool Actor::_check_header_eth()
     return true;
 }
 
-bool Actor::_check_header_aoe(bool response)
+bool Actor::_check_header_aoe_request()
 {
     auto header_aoe = aoe::Header(_input);
 
     if (header_aoe.version != aoe_version) return false;
     if (header_aoe.flag_error == true) return false;
-    if (header_aoe.flag_response != response) return false;
+    if (header_aoe.flag_response != false) return false;
     if (header_aoe.error != (unsigned char) 0) return false;
     if (header_aoe.address_major != _major && header_aoe.address_major != (unsigned short int) 0xffff) return false;
     if (header_aoe.address_minor != _minor && header_aoe.address_minor != (unsigned char) 0xff) return false;
+
+    return true;
+}
+
+bool Actor::_check_header_aoe_response()
+{
+    auto header_aoe = aoe::Header(_input);
+
+    if (header_aoe.version != aoe_version) return false;
+    if (header_aoe.flag_error == true) return false;
+    if (header_aoe.flag_response != true) return false;
+    if (header_aoe.error != (unsigned char) 0) return false;
 
     return true;
 }

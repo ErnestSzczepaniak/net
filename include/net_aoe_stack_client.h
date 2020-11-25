@@ -19,13 +19,18 @@ class Client : public Actor
 public:
     Client(net::interface::Io & interface_io);
 
-    bool connect();
+    unsigned int connect();
 
-    void read(unsigned char * to, int sector);
-    void write(unsigned char * from, int sector);
+    bool read(unsigned char * to, unsigned int sector, int count = 1);
+    bool write(unsigned char * from, unsigned int sector, int count = 1);
 
 protected:
+    int _get_query_response();
+    int _get_identify_response();
+
     eth::address::Custom _destination;
+    unsigned int _sectors;
+    unsigned int _tag = 0;
 
 private:
 

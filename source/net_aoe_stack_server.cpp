@@ -16,7 +16,7 @@ void Server::process()
 
     if (size == 0) return;
     if (_check_header_eth() == false) return;
-    if (_check_header_aoe(false) == false) return;
+    if (_check_header_aoe_request() == false) return;
 
     _fill_header_eth(eth::Header(_input).source);
     _fill_header_aoe(true, aoe::Header(_input).command, aoe::Header(_input).tag);
