@@ -1,5 +1,5 @@
-#ifndef _net_aoe_stack_actor_h
-#define _net_aoe_stack_actor_h
+#ifndef _net_aoe_stack_base_h
+#define _net_aoe_stack_base_h
 
 /**
  * @file	net_aoe_stack_actor.h
@@ -10,29 +10,26 @@
 **/
 
 #include "net_interface.h"
+#include "net_aoe_stack_code.h"
 #include "stdio.h"
 
 namespace net::aoe::stack
 {
 
-class Actor
+class Base
 {
     static constexpr auto size_buffer = 2048;
     static constexpr unsigned char aoe_version = 1;
     static constexpr unsigned short int firmware_version = 0;
 
 public:
-    Actor(net::interface::Io & io);
+    Base(net::interface::Io & io);
 
 protected:
-    template<typename ...Args>
-    void _debug(const char * format, Args ... args);
-
     void _clear(unsigned char * buffer);
 
-    bool _check_header_eth();
-    bool _check_header_aoe_request();
-    bool _check_header_aoe_response();
+    Code _check_header_eth();
+    Code _check_header_aoe(bool response);
 
     void _fill_header_eth(const eth::address::Custom & destination);
     void _fill_header_aoe(bool response, unsigned char command, unsigned int tag);
@@ -52,16 +49,6 @@ protected:
     unsigned char _minor;
 
 }; /* class: Actor */
-
-template<typename ...Args>
-void Actor::_debug(const char * format, Args ... args)
-{
-    char buffer[256];
-    
-    snprintf(buffer, 256, format, args...);
-
-    _interface_io.print(buffer);
-}
 
 }; /* namespace: net::aoe::stack */
 

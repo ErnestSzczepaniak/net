@@ -9,20 +9,20 @@
  * @details	
 **/
 
-#include "net_aoe_stack_actor.h"
+#include "net_aoe_stack_base.h"
 
 namespace net::aoe::stack
 {
 
-class Client : public Actor
+class Client : public Base
 {
 public:
     Client(net::interface::Io & interface_io);
 
-    unsigned int connect();
+    Code connect();
 
-    bool read(unsigned char * to, unsigned int sector, int count = 1);
-    bool write(unsigned char * from, unsigned int sector, int count = 1);
+    Code read(unsigned char * to, unsigned int sector, int count = 1);
+    Code write(unsigned char * from, unsigned int sector, int count = 1);
 
 protected:
     int _get_query_response();
@@ -32,12 +32,8 @@ protected:
     unsigned int _sectors;
     unsigned int _tag = 0;
 
-private:
-
 }; /* class: Client */
 
-
 }; /* namespace: net::aoe::stack */
-
 
 #endif /* define: net_aoe_stack_client_h */

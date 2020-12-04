@@ -9,13 +9,13 @@
  * @details	
 **/
 
-#include "net_aoe_stack_actor.h"
+#include "net_aoe_stack_base.h"
 #include "net_aoe_stack_interface.h"
 
 namespace net::aoe::stack
 {
 
-class Server : public Actor
+class Server : public Base
 {
     static constexpr unsigned short int buffer_count = 1;
     static constexpr unsigned char sector_count = 2;
@@ -23,7 +23,7 @@ class Server : public Actor
 public:
     Server(net::interface::Io & io, interface::Server & server);
 
-    void process();
+    Code process();
 
 protected:
     void _fill_header_aoe_issue(unsigned int lba, bool ready);
