@@ -25,6 +25,8 @@ public:
     Code write(unsigned char * from, unsigned int sector, int count = 1);
 
 protected:
+    
+
     int _get_query_response();
     int _get_identify_response();
 
