@@ -107,6 +107,8 @@ static constexpr unsigned char Security_erase_unit = 0xf4;
 static constexpr unsigned char Security_freeze = 0xf5;
 static constexpr unsigned char Security_disable_password = 0xf6;
 
+static constexpr unsigned char Security_clear_sectors = 0xf7;  // !: custom
+
 }; /* namespace: command */
 
 /* ---------------------------------------------| header |--------------------------------------------- */

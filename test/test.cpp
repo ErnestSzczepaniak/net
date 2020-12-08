@@ -6,11 +6,11 @@ class Interface_io : public net::interface::Io
 public:
     virtual int transmitt(unsigned char *, int, int)
     {
-
+        return 0;
     }
     virtual int receive(unsigned char *, int)
     {
-
+        return 0;
     }
     virtual void print(char *)
     {
@@ -18,7 +18,7 @@ public:
     }
     virtual net::eth::address::Custom & address()
     {
-
+        return net::eth::address::Empty;
     }
 
 }; /* class: Interface */
@@ -28,19 +28,26 @@ class Interface_server : public net::aoe::stack::interface::Server
 public:
     virtual bool read(unsigned char *, int)
     {
-
+        return true;
     }
 
     virtual bool write(unsigned char *, int)
     {
-
+        return true;
     }
-
+    virtual bool clear(int)
+    {
+        return true;
+    }
+    virtual bool erase()
+    {
+        return true;
+    }
     virtual unsigned int sector_count()
     {
-
+        return 0;
     }
-    
+
 }; /* class: Interface_server */
 
 

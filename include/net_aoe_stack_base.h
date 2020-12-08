@@ -28,8 +28,11 @@ public:
 protected:
     void _clear(unsigned char * buffer);
 
-    Code _check_header_eth();
-    Code _check_header_aoe(bool response);
+    Code _check_header_eth_request();
+    Code _check_header_eth_response();
+
+    Code _check_header_aoe_request();
+    Code _check_header_aoe_response(unsigned char command, unsigned int tag);
 
     void _fill_header_eth(const eth::address::Custom & destination);
     void _fill_header_aoe(bool response, unsigned char command, unsigned int tag);

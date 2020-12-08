@@ -19,6 +19,7 @@ class Server : public Base
 {
     static constexpr unsigned short int buffer_count = 1;
     static constexpr unsigned char sector_count = 2;
+    struct Info {unsigned char sector_count; unsigned int lba;};
 
 public:
     Server(net::interface::Io & io, interface::Server & server);
@@ -32,6 +33,10 @@ protected:
     void _fill_data_aoe_issue_identify();
     bool _fill_data_aoe_issue_read(unsigned char sector_count, unsigned int lba);
     bool _fill_data_aoe_issue_write(unsigned char * data, unsigned char sector_count, unsigned int lba);
+    bool _fill_data_aoe_issue_clear(unsigned char sector_count, unsigned int lba);
+    bool _fill_data_aoe_issue_erase();
+
+    Info _get_info_aoe_issue();
 
 private:
     interface::Server & _interface_server;

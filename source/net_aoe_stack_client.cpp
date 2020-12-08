@@ -25,7 +25,7 @@ Code Client::connect()
     size = _get_identify_response();
 
     if (size == -1) return Code::IO_TIMEOUT;
-    if (size == 0) return Code::IO_RX;
+    if (size == 0) return Code::IO_RX; 
     if (size != 552) return Code::IO_SIZE;
 
     if (aoe::Header(_input).command != aoe::command::Issue_ata_command && 
@@ -49,11 +49,9 @@ Code Client::read(unsigned char * to, unsigned int sector, int count)
     if (size == 0) return Code::IO_RX;
     if (size != 40 + 512 * count) return Code::IO_SIZE;
 
-    if (auto code = _check_header_eth(); code != Code::SUCCESS) return code;
-    if (auto code = _check_header_aoe(true); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_eth_response(); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_aoe_response(aoe::command::Issue_ata_command, _tag - 1); code != Code::SUCCESS) return code;
 
-    if (aoe::Header(_input).command != aoe::command::Issue_ata_command) return Code::HEADER_ATA_COMMAND;
-    if (aoe::Header(_input).tag != _tag - 1) return Code::HEADER_AOE_TAG;
     if (aoe::issue::Header(_input).status_device_ready != true) return Code::HEADER_ATA_ISSUE_BUSY;
     if (aoe::issue::Header(_input).lba != sector) return Code::HEADER_ATA_ISSUE_LBA;
 
@@ -77,8 +75,8 @@ Code Client::write(unsigned char * from, unsigned int sector, int count)
     if (size == 0) return Code::IO_RX;
     if (size != 64) return Code::IO_SIZE;
 
-    if (auto code = _check_header_eth(); code != Code::SUCCESS) return code;
-    if (auto code = _check_header_aoe(true); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_eth_response(); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_aoe_response(aoe::command::Issue_ata_command, _tag - 1); code != Code::SUCCESS) return code;
 
     if (aoe::Header(_input).command != aoe::command::Issue_ata_command) return Code::HEADER_ATA_COMMAND;
     if (aoe::Header(_input).tag != _tag - 1) return Code::HEADER_AOE_TAG;

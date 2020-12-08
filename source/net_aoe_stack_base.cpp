@@ -36,7 +36,7 @@ void Base::_fill_header_aoe(bool response, unsigned char command, unsigned int t
     header_aoe.tag = tag;
 }
 
-Code Base::_check_header_eth()
+Code Base::_check_header_eth_request()
 {
     auto header_eth = eth::Header(_input);
 
@@ -48,7 +48,19 @@ Code Base::_check_header_eth()
     return Code::SUCCESS;
 }
 
-Code Base::_check_header_aoe(bool response)
+Code Base::_check_header_eth_response()
+{
+    auto header_eth = eth::Header(_input);
+
+    if (header_eth.destination != _interface_io.address()) 
+        return Code::HEADER_ETH_ADDRESS_DESTINATION;
+    if (header_eth.type != eth::type::Aoe)
+        return Code::HEADER_ETH_TYPE;
+
+    return Code::SUCCESS;
+}
+
+Code Base::_check_header_aoe_request()
 {
     auto header_aoe = aoe::Header(_input);
 
@@ -56,18 +68,34 @@ Code Base::_check_header_aoe(bool response)
         return Code::HEADER_AOE_VERSION;
     if (header_aoe.flag_error == true) 
         return Code::HEADER_AOE_FLAG_ERROR;
-    if (header_aoe.flag_response != response) 
+    if (header_aoe.flag_response == true) 
         return Code::HEADER_AOE_FLAG_RESPONSE;
     if (header_aoe.error != (unsigned char) 0) 
         return Code::HEADER_AOE_ERROR;
+    if (header_aoe.address_major != _major && header_aoe.address_major != (unsigned short int) 0xffff) 
+        return Code::HEADER_AOE_ADDRESS_MAJOR;
+    if (header_aoe.address_minor != _minor && header_aoe.address_minor != (unsigned char) 0xff) 
+        return Code::HEADER_AOE_ADDRESS_MINOR;
 
-    if (response == false) // if request, check address
-    {
-        if (header_aoe.address_major != _major && header_aoe.address_major != (unsigned short int) 0xffff) 
-            return Code::HEADER_AOE_ADDRESS_MAJOR;
-        if (header_aoe.address_minor != _minor && header_aoe.address_minor != (unsigned char) 0xff) 
-            return Code::HEADER_AOE_ADDRESS_MINOR;
-    }
+    return Code::SUCCESS;
+}
+
+Code Base::_check_header_aoe_response(unsigned char command, unsigned int tag)
+{
+    auto header_aoe = aoe::Header(_input);
+
+    if (header_aoe.version != aoe_version) 
+        return Code::HEADER_AOE_VERSION;
+    if (header_aoe.flag_error == true) 
+        return Code::HEADER_AOE_FLAG_ERROR;
+    if (header_aoe.flag_response == false) 
+        return Code::HEADER_AOE_FLAG_RESPONSE;
+    if (header_aoe.error != (unsigned char) 0) 
+        return Code::HEADER_AOE_ERROR;
+    if (header_aoe.command != command)
+        return Code::HEADER_AOE_COMMAND;
+    if (header_aoe.tag != tag)
+        return Code::HEADER_AOE_TAG;
 
     return Code::SUCCESS;
 }
