@@ -23,10 +23,11 @@ public:
 
     Code read(unsigned char * to, unsigned int sector, int count = 1);
     Code write(unsigned char * from, unsigned int sector, int count = 1);
+    Code erase_unit();
+    Code erase_sectors(unsigned int sector, int count = 1);
+
 
 protected:
-    
-
     int _get_query_response();
     int _get_identify_response();
 

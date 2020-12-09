@@ -54,16 +54,16 @@ Code Server::process()
             result_io = _fill_data_aoe_issue_write(_input, sector_count, lba);
             size_tx = 36;
         }
-        else if (aoe::issue::Header(_input).command == aoe::issue::command::Security_clear_sectors)
+        else if (aoe::issue::Header(_input).command == aoe::issue::command::Security_erase_unit)
+        {
+            result_io = _fill_data_aoe_issue_erase_unit();
+            size_tx = 36;
+        }
+        else if (aoe::issue::Header(_input).command == aoe::issue::command::Security_erase_sectors)
         {
             auto [sector_count, lba] = _get_info_aoe_issue();
 
-            result_io = _fill_data_aoe_issue_clear(sector_count, lba);
-            size_tx = 36;
-        }
-        else if (aoe::issue::Header(_input).command == aoe::issue::command::Security_erase_unit)
-        {
-            result_io = _fill_data_aoe_issue_erase();
+            result_io = _fill_data_aoe_issue_erase_sectors(sector_count, lba);
             size_tx = 36;
         }
         else return Code::HEADER_ATA_COMMAND;
@@ -108,19 +108,19 @@ bool Server::_fill_data_aoe_issue_write(unsigned char * data, unsigned char sect
     return true;
 }
 
-bool Server::_fill_data_aoe_issue_clear(unsigned char sector_count, unsigned int lba)
+bool Server::_fill_data_aoe_issue_erase_unit()
+{
+    return _interface_server.erase_unit();
+}
+
+bool Server::_fill_data_aoe_issue_erase_sectors(unsigned char sector_count, unsigned int lba)
 {
     for (int i = 0; i < sector_count; i++)
     {
-        if (_interface_server.clear(lba + i) == false) return false;
+        if (_interface_server.erase_sector(lba + i) == false) return false;
     }
     
     return true;
-}
-
-bool Server::_fill_data_aoe_issue_erase()
-{
-    return _interface_server.erase();
 }
 
 Server::Info Server::_get_info_aoe_issue()

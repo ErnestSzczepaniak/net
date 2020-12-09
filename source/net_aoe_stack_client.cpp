@@ -86,6 +86,50 @@ Code Client::write(unsigned char * from, unsigned int sector, int count)
     return Code::SUCCESS;
 }
 
+Code Client::erase_unit()
+{
+    _fill_header_eth(_destination);
+    _fill_header_aoe(false, aoe::command::Issue_ata_command, _tag++);
+    _fill_header_aoe_issue_request(0, aoe::issue::command::Security_erase_unit, 0);
+
+    _interface_io.transmitt(_output, 36, 100);
+    auto size = _interface_io.receive(_input, 10000);
+
+    if (size == -1) return Code::IO_TIMEOUT;
+    if (size == 0) return Code::IO_RX;
+    if (size != 64) return Code::IO_SIZE;
+
+    if (auto code = _check_header_eth_response(); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_aoe_response(aoe::command::Issue_ata_command, _tag - 1); code != Code::SUCCESS) return code;
+
+    if (aoe::issue::Header(_input).status_device_ready != true) return Code::HEADER_ATA_ISSUE_BUSY;
+    if (aoe::issue::Header(_input).lba != (unsigned int) 0) return Code::HEADER_ATA_ISSUE_LBA;
+
+    return Code::SUCCESS;
+}
+
+Code Client::erase_sectors(unsigned int sector, int count)
+{
+    _fill_header_eth(_destination);
+    _fill_header_aoe(false, aoe::command::Issue_ata_command, _tag++);
+    _fill_header_aoe_issue_request(count, aoe::issue::command::Security_erase_sectors, sector);
+
+    _interface_io.transmitt(_output, 36, 100);
+    auto size = _interface_io.receive(_input, 10000);
+
+    if (size == -1) return Code::IO_TIMEOUT;
+    if (size == 0) return Code::IO_RX;
+    if (size != 64) return Code::IO_SIZE;
+
+    if (auto code = _check_header_eth_response(); code != Code::SUCCESS) return code;
+    if (auto code = _check_header_aoe_response(aoe::command::Issue_ata_command, _tag - 1); code != Code::SUCCESS) return code;
+
+    if (aoe::issue::Header(_input).status_device_ready != true) return Code::HEADER_ATA_ISSUE_BUSY;
+    if (aoe::issue::Header(_input).lba != sector) return Code::HEADER_ATA_ISSUE_LBA;
+
+    return Code::SUCCESS; 
+}
+
 int Client::_get_query_response()
 {
     _clear(_output);

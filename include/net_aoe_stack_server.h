@@ -33,8 +33,8 @@ protected:
     void _fill_data_aoe_issue_identify();
     bool _fill_data_aoe_issue_read(unsigned char sector_count, unsigned int lba);
     bool _fill_data_aoe_issue_write(unsigned char * data, unsigned char sector_count, unsigned int lba);
-    bool _fill_data_aoe_issue_clear(unsigned char sector_count, unsigned int lba);
-    bool _fill_data_aoe_issue_erase();
+    bool _fill_data_aoe_issue_erase_unit();
+    bool _fill_data_aoe_issue_erase_sectors(unsigned char sector_count, unsigned int lba);
 
     Info _get_info_aoe_issue();
 

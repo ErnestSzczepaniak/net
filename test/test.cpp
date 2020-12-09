@@ -35,11 +35,11 @@ public:
     {
         return true;
     }
-    virtual bool clear(int)
+    virtual bool erase_unit()
     {
         return true;
     }
-    virtual bool erase()
+    virtual bool erase_sector(int)
     {
         return true;
     }
