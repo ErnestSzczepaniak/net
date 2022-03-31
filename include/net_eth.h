@@ -53,6 +53,8 @@ namespace type
 {
 
 static constexpr unsigned short int Aoe = 0x88a2;
+static constexpr unsigned short int Arp = 0x0806;
+static constexpr unsigned short int Ipv4 = 0x0800;
 
 }; /* namespace: type */
 
