@@ -16,5 +16,7 @@
 #include "net_aoe_issue_identify.h"
 #include "net_aoe_stack_server.h"
 #include "net_aoe_stack_client.h"
+#include "net_arp.h"
+#include "net_ipv4.h"
 
 #endif /* define: net_h */

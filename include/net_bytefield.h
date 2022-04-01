@@ -19,9 +19,9 @@ class Bytefield : public Field
 {
 public:
     Bytefield(unsigned char * data) : Field(data) {}
-
     Bytefield & operator=(const T & value)
     {
+        int size = sizeof(T);
         if (reverse && sizeof(T) > 1)
         {
             auto temp = _reverse(value);
