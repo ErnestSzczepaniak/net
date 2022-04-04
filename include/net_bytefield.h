@@ -22,8 +22,10 @@ public:
     Bytefield & operator=(const T & value)
     {
         int size = sizeof(T);
+        int i= byte;
         if (reverse && sizeof(T) > 1)
         {
+            
             auto temp = _reverse(value);
             memcpy(&_data[byte], &temp, sizeof(T));
         }

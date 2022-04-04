@@ -49,8 +49,8 @@ namespace net::arp
         using Sender_mac = Bytefield<eth::address::Custom, 8, false>;
         using Sender_ipv4 = Bytefield<ipv4::address::Custom, 14, false>;
 
-        using Target_mac = Bytefield<eth::address::Custom, 18, false>;
-        using Target_ipv4 = Bytefield<ipv4::address::Custom, 24, false>;
+        using Target_mac = Bytefield<net::eth::address::Custom, 18, false>;
+        using Target_ipv4 = Bytefield<net::ipv4::address::Custom, 24, false>;
     public:
         Header(unsigned char * data):
             hardware_type(data+position), protocol_type(data+position), hardware_size(data+position), protocol_size(data+position), opcode(data+position), sender_mac(data+position),
