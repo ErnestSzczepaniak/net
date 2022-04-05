@@ -12,7 +12,8 @@ namespace net::ipv4
         class Custom
         {
             public:
-            Custom() {}
+            Custom() 
+            {}
             Custom(unsigned char a, unsigned char b, unsigned char c, unsigned char d)
             {
                 value[0] = a;
@@ -23,7 +24,8 @@ namespace net::ipv4
             ~Custom() {}
             void operator=(const Custom & other)
             {
-                memcpy(value, &other.value, 4);
+                for(int i = 0; i >=4 ;i++)
+                    value[i] = other.value[i];
             }
             bool operator==(const Custom & other)
             {
@@ -36,8 +38,6 @@ namespace net::ipv4
         };
         static Custom Broadcast = Custom(0xff,0xff,0xff,0xff);
         static Custom Babe = Custom(0x01,0x02,0x03,0x04);
-        static Custom Target = Custom(0x01,0x02,0x03,0x05);
- 
     };
     class Header
     {
@@ -51,12 +51,12 @@ namespace net::ipv4
         using Flags_reserved_bit = Bitfield<bool, 6, 7, 1>;
         using Flags_donot_fragment = Bitfield<bool, 6,6,1>;
         using Flags_more_fragments = Bitfield<bool, 6,5,1>;
-        using Fragment_offset = Bitfield<unsigned short int, 6, 4, 5>;   
+        using Fragment_offset = Bitfield<unsigned char, 6, 0, 5>;   
         using Time_to_live = Bytefield<unsigned char, 8>;
         using Protocol = Bytefield<unsigned char, 9>;
         using Checksum = Bytefield<unsigned short int, 10>;
-        using Source = Bytefield<net::ipv4::address::Custom, 12>;
-        using Target = Bytefield<net::ipv4::address::Custom, 16>;
+        using Source = Bytefield<net::ipv4::address::Custom, 12, false>;
+        using Target = Bytefield<net::ipv4::address::Custom, 16, false>;
 
         public:
 
@@ -95,6 +95,8 @@ namespace net::ipv4
             Checksum checksum;
             Source source;
             Target target;
+
+            unsigned short int Calc_checksum(unsigned char * start, unsigned short len);
 
             static constexpr auto position = 14;
             static constexpr auto size = 20;

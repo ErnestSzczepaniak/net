@@ -35,7 +35,10 @@ public:
 
     void operator=(const Custom & other)
     {
-        memcpy(value, other.value, 6);
+        for (int i = 0; i <= 6; i++)
+        {
+            value[i]=other.value[i];
+        }
     }
     bool operator==(const Custom & other)
     {

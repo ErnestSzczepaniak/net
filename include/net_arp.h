@@ -15,6 +15,7 @@ namespace net::arp
         static constexpr unsigned char Hardware_size_ethernet = 0x06;
         static constexpr unsigned char Protocol_size_ipv4 = 0x04;
         static constexpr unsigned char Opcode_request = 0x01;
+        static constexpr unsigned char Opcode_request = 0x02;
     };
     /*class Base
     {
