@@ -2,6 +2,7 @@
 #define net_arp_h
 #include "net.h"
 #include "net_ipv4.h"
+#include "net_arp_code.h"
 #include "net_bitfield.h"
 #include "net_bytefield.h"
 
@@ -14,29 +15,29 @@ namespace net::arp
         static constexpr unsigned short int Protocol_type_ipv4 = 0x0800; 
         static constexpr unsigned char Hardware_size_ethernet = 0x06;
         static constexpr unsigned char Protocol_size_ipv4 = 0x04;
-        static constexpr unsigned char Opcode_request = 0x01;
-        static constexpr unsigned char Opcode_request = 0x02;
+        static constexpr unsigned short int Opcode_request = 0x0001;
+        static constexpr unsigned short int Opcode_replay = 0x0002;
     };
-    /*class Base
+    class Base
     {
-        static constexpr auto size_buffer = 64;
+        static constexpr auto size_buffer = 42;
         public:
             Base(net::interface::Io & io);
         protected:
 
+        void _clear(unsigned char * buffer);
+
         void _fill_header_eth(const eth::address::Custom & destination);
-        //void _send_arp_req(const eth::address::Custom & destination);
-        void _fill_header_arp(const eth::address::Custom & eth_destination, const ipv4::address::Custom & ipv4_destination);
+        void _fill_header_arp(const eth::address::Custom & eth_destination, const ipv4::address::Custom & ipv4_destination, unsigned short int opcode);
     
-        void _check_arp_request();
-        void _check_arp_response();
+        Code _check_header_eth_arp();
+        Code _check_header_arp_opcode(unsigned short int opcode);
 
         unsigned char _input[size_buffer];
         unsigned char _output[size_buffer];
 
         net::interface::Io & _interface_io;
-<unsigned short int, 0>;
-    };*/
+    };
     class Header
     {
         using Hardware_type = Bytefield<unsigned short int, 0>;
@@ -70,11 +71,16 @@ namespace net::arp
         Target_ipv4 target_ipv4;
         
         static constexpr auto position = 14;
-        static constexpr auto size = 28;
-    protected:
-
-        
+        static constexpr auto size = 28;   
     };
+    class Arp : public Base
+    {
+        public:
+            Arp(net::interface::Io & io, interface::Io & server);
+            Arp();
+            Code process();
+    };
+
     
 };
 #endif

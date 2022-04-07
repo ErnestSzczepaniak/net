@@ -51,7 +51,7 @@ namespace net::ipv4
         using Flags_reserved_bit = Bitfield<bool, 6, 7, 1>;
         using Flags_donot_fragment = Bitfield<bool, 6,6,1>;
         using Flags_more_fragments = Bitfield<bool, 6,5,1>;
-        using Fragment_offset = Bitfield<unsigned char, 6, 0, 5>;   
+        using Fragment_offset = Bitfield<unsigned char, 7, 0, 13>;   
         using Time_to_live = Bytefield<unsigned char, 8>;
         using Protocol = Bytefield<unsigned char, 9>;
         using Checksum = Bytefield<unsigned short int, 10>;
@@ -96,7 +96,7 @@ namespace net::ipv4
             Source source;
             Target target;
 
-            unsigned short int Calc_checksum(unsigned char * start, unsigned short len);
+            static unsigned short int Calc_checksum(unsigned int * ptr, unsigned short len);
 
             static constexpr auto position = 14;
             static constexpr auto size = 20;
