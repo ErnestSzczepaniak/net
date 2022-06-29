@@ -28,9 +28,18 @@ public:
             _data[byte] &= ~(mask << offset);
             _data[byte] |= ((unsigned char) value << offset);
         }
-        else
+        else if(sizeof(T)==2)
         {
+            auto span_rest = span - 8;
+            auto offset_rest = 16 - span;
+            auto _span = span - span_rest;
+            auto mask = (1 << _span) - 1;
+            _data[byte] &= ~(mask << offset);
+            _data[byte] |= ((unsigned char) value << offset);
+            mask = (1 << span_rest) - 1;
             
+            _data[byte-1] &= ~(mask);
+            _data[byte-1] |= ((unsigned char) value >> offset_rest);
         }
 
         return *this;

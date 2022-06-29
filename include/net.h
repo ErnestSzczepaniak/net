@@ -16,5 +16,18 @@
 #include "net_aoe_issue_identify.h"
 #include "net_aoe_stack_server.h"
 #include "net_aoe_stack_client.h"
+#include "net_arp.h"
+#include "net_ipv4.h"
+#include "net_ipv4_code.h"
+#include "net_ipv4_interface.h"
+#include "net_arp_stack_base.h"
+#include "net_arp_stack_client.h"
+#include "net_arp_stack_server.h"
+#include "net_icmp.h"
+#include "net_icmp_code.h"
+#include "net_icmp_stack_base.h"
+#include "net_icmp_stack_server.h"
+#include "net_icmp_stack_client.h"
+
 
 #endif /* define: net_h */

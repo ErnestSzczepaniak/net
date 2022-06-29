@@ -35,7 +35,17 @@ public:
 
     void operator=(const Custom & other)
     {
-        memcpy(value, other.value, 6);
+        for (int i = 0; i <= 6; i++)
+        {
+            value[i]=other.value[i];
+        }
+    }
+    bool operator==(const Custom & other)
+    {
+        if(memcmp(value, other.value, 6)==0)
+            return true;
+        else 
+            return false;
     }
 
     unsigned char value[6];
@@ -66,16 +76,18 @@ class Header
     using Address_source = Bytefield<address::Custom, 6, false>;
     using Type = Bytefield<unsigned short int, 12>;
 
-public:
-    Header(unsigned char * data) : destination(data), source(data), type(data) {}
-    ~Header() {}
-  
-    Address_destination destination;
-    Address_source source;
-    Type type;
+    public:
+        Header(unsigned char * data) : destination(data), source(data), type(data) {}
+        ~Header() {}
+    
+        Address_destination destination;
+        Address_source source;
+        Type type;
 
-    static constexpr auto position = 0;
-    static constexpr auto size = 14;
+        static constexpr auto position = 0;
+        static constexpr auto size = 14;
+
+
 }; /* class: Type */
 
 }; /* namespace: net::eth */

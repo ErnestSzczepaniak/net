@@ -19,15 +19,27 @@ class Bytefield : public Field
 {
 public:
     Bytefield(unsigned char * data) : Field(data) {}
-
     Bytefield & operator=(const T & value)
     {
         if (reverse && sizeof(T) > 1)
         {
             auto temp = _reverse(value);
-            memcpy(&_data[byte], &temp, sizeof(T));
+            unsigned char * ptr = ((unsigned char * )&temp+1);
+            for(int i = (sizeof(T)-1); i >= 0; i--)
+            {
+                _data[byte +i] = *ptr;
+                ptr--; 
+            }
         }
-        else memcpy(&_data[byte], &value, sizeof(T));
+        else
+        {
+            unsigned char * ptr = (unsigned char * )&value;
+            for(int i = 0 ; i < sizeof(T); i++)
+            {
+                    _data[byte +i] = *ptr;
+                    ptr++; 
+            }
+        }
 
         return *this;
     }
@@ -42,6 +54,12 @@ public:
     {
         T temp;
 
+        /*unsigned char * ptr = ((unsigned char * )&temp+1);
+        for(int i = (sizeof(T)-1); i >= 0; i--)
+        {
+            _data[byte +i] = *ptr;
+            ptr--; 
+        }*/
         memcpy(&temp, &_data[byte], sizeof(T));
 
         if (reverse && sizeof(T) > 1) temp = _reverse(temp);
