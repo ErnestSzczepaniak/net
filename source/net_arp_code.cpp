@@ -1,6 +1,6 @@
 #include "net_arp_code.h"
 
-namespace net::arp
+namespace net::arp::stack
 {
     const char * parse(Code value)
     {
@@ -20,5 +20,6 @@ namespace net::arp
         else if (value == Code::IO_RX) return "IO RX";
         else if (value == Code::IO_TIMEOUT) return "IO TIMEOUT";
         else if (value == Code::IO_SIZE) return "IO SIZE";
+        else if (value == Code::SUCCESS) return "SUCCESS";
     }
 }

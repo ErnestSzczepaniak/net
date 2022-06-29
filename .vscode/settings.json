@@ -18,6 +18,9 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "variant": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "streambuf": "cpp"
     }
 }

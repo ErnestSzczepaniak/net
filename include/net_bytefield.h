@@ -54,13 +54,13 @@ public:
     {
         T temp;
 
-        unsigned char * ptr = ((unsigned char * )&temp+1);
+        /*unsigned char * ptr = ((unsigned char * )&temp+1);
         for(int i = (sizeof(T)-1); i >= 0; i--)
         {
             _data[byte +i] = *ptr;
             ptr--; 
-        }
-        //memcpy(&temp, &_data[byte], sizeof(T));
+        }*/
+        memcpy(&temp, &_data[byte], sizeof(T));
 
         if (reverse && sizeof(T) > 1) temp = _reverse(temp);
 

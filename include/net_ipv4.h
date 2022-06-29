@@ -7,6 +7,19 @@
 
 namespace net::ipv4
 {
+    namespace command
+    {
+        static constexpr unsigned char Version_4 = 4;
+        static constexpr unsigned char Header_length_20 = 5;
+        static constexpr unsigned char Different_services_codepoint_default = 0;
+        static constexpr unsigned char Explicit_congestion_notfication_not_ecn_capable_transport = 0;
+        static constexpr bool Reserved_bit_not_set = 0;
+        static constexpr bool Do_not_fragment_set = 1;
+        static constexpr bool More_framgent_not_set = 0;
+        static constexpr unsigned short int Fragment_offset_0 = 0x0000;
+        static constexpr unsigned char Protocol_icmp = 1;        
+
+    }
     namespace address
     {
         class Custom
@@ -38,6 +51,7 @@ namespace net::ipv4
         };
         static Custom Broadcast = Custom(0xff,0xff,0xff,0xff);
         static Custom Babe = Custom(0x01,0x02,0x03,0x04);
+        static Custom Empty = Custom(0,0,0,0);
     };
     class Header
     {
@@ -51,7 +65,7 @@ namespace net::ipv4
         using Flags_reserved_bit = Bitfield<bool, 6, 7, 1>;
         using Flags_donot_fragment = Bitfield<bool, 6,6,1>;
         using Flags_more_fragments = Bitfield<bool, 6,5,1>;
-        using Fragment_offset = Bitfield<unsigned char, 7, 0, 13>;   
+        using Fragment_offset = Bitfield<unsigned short int, 7, 0, 13>;   
         using Time_to_live = Bytefield<unsigned char, 8>;
         using Protocol = Bytefield<unsigned char, 9>;
         using Checksum = Bytefield<unsigned short int, 10>;
@@ -96,7 +110,7 @@ namespace net::ipv4
             Source source;
             Target target;
 
-            static unsigned short int Calc_checksum(unsigned int * ptr, unsigned short len);
+            static unsigned short int Calc_checksum(unsigned short int * ptr, unsigned short len);
 
             static constexpr auto position = 14;
             static constexpr auto size = 20;

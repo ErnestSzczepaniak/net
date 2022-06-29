@@ -18,26 +18,6 @@ namespace net::arp
         static constexpr unsigned short int Opcode_request = 0x0001;
         static constexpr unsigned short int Opcode_replay = 0x0002;
     };
-    class Base
-    {
-        static constexpr auto size_buffer = 42;
-        public:
-            Base(net::interface::Io & io);
-        protected:
-
-        void _clear(unsigned char * buffer);
-
-        void _fill_header_eth(const eth::address::Custom & destination);
-        void _fill_header_arp(const eth::address::Custom & eth_destination, const ipv4::address::Custom & ipv4_destination, unsigned short int opcode);
-    
-        Code _check_header_eth_arp();
-        Code _check_header_arp_opcode(unsigned short int opcode);
-
-        unsigned char _input[size_buffer];
-        unsigned char _output[size_buffer];
-
-        net::interface::Io & _interface_io;
-    };
     class Header
     {
         using Hardware_type = Bytefield<unsigned short int, 0>;
@@ -55,8 +35,14 @@ namespace net::arp
         using Target_ipv4 = Bytefield<net::ipv4::address::Custom, 24, false>;
     public:
         Header(unsigned char * data):
-            hardware_type(data+position), protocol_type(data+position), hardware_size(data+position), protocol_size(data+position), opcode(data+position), sender_mac(data+position),
-            sender_ipv4(data+position), target_mac(data+position), target_ipv4(data+position){}
+            hardware_type(data+position),
+            protocol_type(data+position),
+            hardware_size(data+position),
+            protocol_size(data+position),
+            opcode(data+position),
+            sender_mac(data+position),
+            sender_ipv4(data+position),
+            target_mac(data+position), target_ipv4(data+position){}
         ~Header(){}
         Hardware_type hardware_type;
         Protocol_type protocol_type;
@@ -73,13 +59,7 @@ namespace net::arp
         static constexpr auto position = 14;
         static constexpr auto size = 28;   
     };
-    class Arp : public Base
-    {
-        public:
-            Arp(net::interface::Io & io, interface::Io & server);
-            Arp();
-            Code process();
-    };
+
 
     
 };

@@ -1,7 +1,7 @@
 #ifndef NET_ARP_CODE_H
 #define NET_ARP_CODE_H
 
-namespace net::arp
+namespace net::arp::stack
 {
     enum class Code : unsigned char
     {
@@ -24,7 +24,7 @@ namespace net::arp
         IO_TX,
         IO_RX,
         IO_TIMEOUT,
-        IO_SIZE,
+        IO_SIZE
 
     }; /* enum: Result */
 
