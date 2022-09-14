@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/include/eth/",
                 "${workspaceFolder}/../designer/"
             ],
             "intelliSenseMode": "gcc-x64",

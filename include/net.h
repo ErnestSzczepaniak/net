@@ -9,12 +9,12 @@
  * @details	
 **/
 
-#include "net_eth.h"
-#include "net_aoe.h"
-#include "net_aoe_query.h"
-#include "net_aoe_issue.h"
-#include "net_aoe_issue_identify.h"
-#include "net_aoe_stack_server.h"
-#include "net_aoe_stack_client.h"
+// #include "net_eth.h"
+// #include "net_aoe.h"
+// #include "net_aoe_query.h"
+// #include "net_aoe_issue.h"
+// #include "net_aoe_issue_identify.h"
+// #include "net_aoe_stack_server.h"
+// #include "net_aoe_stack_client.h"
 
 #endif /* define: net_h */
