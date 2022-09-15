@@ -1,8 +1,9 @@
 # ---------------------------------------------| source |--------------------------------------------- #
 
 set(source_extension            )
-set(source_common               source/field/
+set(source_common               source/generic/
                                 source/eth/
+                                source/ip/
                                 )
 set(source_target               )
 set(source_host                 )
@@ -29,8 +30,9 @@ set(private_option_host         )
 
 # ---------------------------------------------| include |--------------------------------------------- #
 
-set(public_include_common       include/field/
+set(public_include_common       include/generic/
                                 include/eth/
+                                include/ip/
                                 )
 set(public_include_target       )
 set(public_include_host         )

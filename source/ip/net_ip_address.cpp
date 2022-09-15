@@ -1,8 +1,8 @@
-#include "net_eth_address.h"
+#include "net_ip_address.h"
 #include <cstdlib>
 #include <cstring>
 
-namespace net::eth::address
+namespace net::ip::address
 {
 
 Custom::Custom()
@@ -12,9 +12,7 @@ Custom::Custom()
 
 Custom::Custom(const char * value)
 {
-    if (strlen(value) != 17) return;
-
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 4; i++)
     {
         _data[i] = _withdraw(value, i);
     }
@@ -24,10 +22,12 @@ Custom::~Custom()
 {
 
 }
+
 bool Custom::operator==(const Custom & other)
 {
-    return (memcmp(_data, other._data, 6) == 0);
+    return memcmp(_data, other._data, 4) == 0;
 }
+
 
 unsigned char Custom::_withdraw(const char * value, int index)
 {
@@ -40,7 +40,7 @@ unsigned char Custom::_withdraw(const char * value, int index)
 
         for (int i = 0; i < strlen(value); i++)
         {
-            if (value[i] == ':') counter++;
+            if (value[i] == '.') counter++;
             if (counter == index)
             {
                 pointer = (char * ) &value[i + 1];
@@ -49,7 +49,7 @@ unsigned char Custom::_withdraw(const char * value, int index)
         }
     }
 
-    return (unsigned char) strtol(pointer, nullptr, 16);
+    return (unsigned char) strtol(pointer, nullptr, 10);
 }
 
-}; /* namespace:  */
+}; /* namespace: net::ip */

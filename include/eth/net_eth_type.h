@@ -12,18 +12,10 @@
 namespace net::eth::type
 {
 
-class Custom
-{
-public:
-    Custom();
-    Custom(const char * value);
-    ~Custom();
-
-
-}; /* class: Custom */
-
-static Custom ipv4 = Custom("ipv4");
-static Custom ipv6 = Custom("ipv6");
+static constexpr unsigned short int IPv4 =      0x0800;
+static constexpr unsigned short int IPv6 =      0x86DD;
+static constexpr unsigned short int ARP =       0x0806;
+static constexpr unsigned short int AoE =       0x88a2;
 
 }; /* namespace: net::eth::type */
 

@@ -19,14 +19,13 @@ public:
     Custom(const char * value);
     ~Custom();
 
-    bool operator==(const char * value);
     bool operator==(const Custom & value);
 
 protected:
     unsigned char _withdraw(const char * value, int index);
 
 private:
-    unsigned char _address[6];
+    unsigned char _data[6];
 
 }; /* class: Address */
 
