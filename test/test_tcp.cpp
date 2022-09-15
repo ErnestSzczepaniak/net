@@ -1,0 +1,36 @@
+#include "test.h"
+#include "net.h"
+
+TEST_CASE("test tcp")
+{
+    unsigned char buffer[] = {
+        0x14, 0xcc, 0x20, 0xd1, 0x1b, 0x18, 0x08, 0x5b, 0xd6, 0xc6, 0x9a, 0xbc, 0x08, 0x00, 0x45, 0x00,
+        0x00, 0x40, 0xa0, 0xbf, 0x40, 0x00, 0x40, 0x06, 0x70, 0x33, 0xc0, 0xa8, 0x01, 0x6d, 0x44, 0xe8,
+        0x22, 0xc8, 0xd5, 0x70, 0x01, 0xbb, 0x05, 0x95, 0x48, 0x66, 0x33, 0xcb, 0xbd, 0x9d, 0xb0, 0x10,
+        0x03, 0x12, 0x29, 0xf8, 0x00, 0x00, 0x01, 0x01, 0x08, 0x0a, 0xd4, 0x2b, 0x03, 0x70, 0x9a, 0xb8,
+        0x45, 0xaf, 0x01, 0x01, 0x05, 0x0a, 0x33, 0xcb, 0xc2, 0xf5, 0x33, 0xcb, 0xc8, 0x4d
+    };
+
+    auto header_eth = net::eth::Header(buffer);
+    auto header_ip = net::ip::Header(header_eth.payload);
+    auto header_tcp = net::tcp::Header(header_ip.payload);
+
+    REQUIRE(header_tcp.source_port == 54640);
+    REQUIRE(header_tcp.destination_port == 443);
+    REQUIRE(header_tcp.sequence_number == 93669478);
+    REQUIRE(header_tcp.acknowledgment_number == 868990365);
+    REQUIRE(header_tcp.header_length == 11);
+    REQUIRE(header_tcp.reserved == 0);
+    REQUIRE(header_tcp.ns == false);
+    REQUIRE(header_tcp.cwr == false);
+    REQUIRE(header_tcp.ece == false);
+    REQUIRE(header_tcp.urg == false);
+    REQUIRE(header_tcp.ack == true);
+    REQUIRE(header_tcp.psh == false);
+    REQUIRE(header_tcp.rst == false);
+    REQUIRE(header_tcp.syn == false);
+    REQUIRE(header_tcp.fin == false);
+    REQUIRE(header_tcp.window_size == 786);
+    REQUIRE(header_tcp.checksum == 0x29f8);
+    REQUIRE(header_tcp.urgent_pointer == 0);
+}

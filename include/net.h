@@ -12,6 +12,10 @@
 #include "net_generic.h"
 #include "net_eth.h"
 #include "net_ip.h"
+#include "net_tcp.h"
+#include "net_udp.h"
+#include "net_arp.h"
+
 // #include "net_aoe.h"
 // #include "net_aoe_query.h"
 // #include "net_aoe_issue.h"

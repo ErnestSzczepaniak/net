@@ -16,21 +16,19 @@
 namespace net::eth
 {
 
-class Header : public generic::Header
+class Header
 {
     static constexpr auto size = 14;
-
-    using Address_destination = generic::Bytes<address::Custom, 0, false>;
-    using Address_source = generic::Bytes<address::Custom, 6, false>;
-    using Type = generic::Bytes<unsigned short int, 12, true>;
 
 public:
     Header(unsigned char * buffer);
     ~Header();
 
-    Address_destination address_destination;
-    Address_source address_source;
-    Type type;
+    generic::Bytes<address::Custom, 0, false> address_destination;
+    generic::Bytes<address::Custom, 6, false> address_source;
+    generic::Bytes<unsigned short int, 12, true> type;
+
+    unsigned char * payload;
 
 }; /* class: Header */
 

@@ -14,8 +14,8 @@
 namespace net::generic
 {
 
-template<typename T, int offset, bool reverse>
-class Bytes : public Field<T, Bytes<T, offset, reverse>>
+template<typename T, int byte, bool reverse>
+class Bytes : public Field<T, Bytes<T, byte, reverse>>
 {
 public:
     Bytes(unsigned char * buffer);
@@ -35,58 +35,58 @@ private:
 
 }; /* class: Bytes */
 
-template<typename T, int offset, bool reverse>
-Bytes<T, offset, reverse>::Bytes(unsigned char * buffer) : 
-Field<T, Bytes<T, offset, reverse>>(this), 
+template<typename T, int byte, bool reverse>
+Bytes<T, byte, reverse>::Bytes(unsigned char * buffer) : 
+Field<T, Bytes<T, byte, reverse>>(this), 
 _buffer(buffer)
 {
 
 }
 
-template<typename T, int offset, bool reverse>
-Bytes<T, offset, reverse>::~Bytes()
+template<typename T, int byte, bool reverse>
+Bytes<T, byte, reverse>::~Bytes()
 {
     
 }
 
-template<typename T, int offset, bool reverse>
-Bytes<T, offset, reverse>::operator T() const
+template<typename T, int byte, bool reverse>
+Bytes<T, byte, reverse>::operator T() const
 {
     return _load();
 }
 
-template<typename T, int offset, bool reverse>
-Bytes<T, offset, reverse> & Bytes<T, offset, reverse>::operator=(const T & value)
+template<typename T, int byte, bool reverse>
+Bytes<T, byte, reverse> & Bytes<T, byte, reverse>::operator=(const T & value)
 {
-    _push(value);
+    _store(value);
 
     return *this;
 }
 
 /* ---------------------------------------------| private |--------------------------------------------- */
 
-template<typename T, int offset, bool reverse>
-auto Bytes<T, offset, reverse>::_load() const
+template<typename T, int byte, bool reverse>
+auto Bytes<T, byte, reverse>::_load() const
 {
     T temp;
 
-    memcpy(&temp, &_buffer[offset], sizeof(T));
+    memcpy(&temp, &_buffer[byte], sizeof(T));
 
     if constexpr (reverse) temp = _invert(temp);
 
     return temp;
 }
 
-template<typename T, int offset, bool reverse>
-void Bytes<T, offset, reverse>::_store(const T & value)
+template<typename T, int byte, bool reverse>
+void Bytes<T, byte, reverse>::_store(const T & value)
 {
     if constexpr (reverse) value = _invert(value);
 
-    memcpy(&_buffer[offset], &value, sizeof(T));
+    memcpy(&_buffer[byte], &value, sizeof(T));
 }
 
-template<typename T, int offset, bool reverse>
-T Bytes<T, offset, reverse>::_invert(T value) const
+template<typename T, int byte, bool reverse>
+T Bytes<T, byte, reverse>::_invert(T value) const
 {
     T temp;
 

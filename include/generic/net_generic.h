@@ -11,6 +11,5 @@
 
 #include "net_generic_bits.h"
 #include "net_generic_bytes.h"
-#include "net_generic_header.h"
 
 #endif /* define: net_generic_h */

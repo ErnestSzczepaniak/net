@@ -6,10 +6,8 @@ namespace net::ip
 Header::Header(unsigned char * buffer) :
 version(buffer),
 header_length(buffer),
-precendence(buffer),
-delay(buffer),
-throughput(buffer),
-reliability(buffer),
+dscp(buffer),
+ecn(buffer),
 total_length(buffer),
 identification(buffer),
 dont_fragment(buffer),
