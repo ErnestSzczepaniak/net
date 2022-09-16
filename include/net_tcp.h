@@ -1,19 +1,21 @@
-#ifndef _net_tcp_header_h
-#define _net_tcp_header_h
+#ifndef _net_tcp_h
+#define _net_tcp_h
 
 /**
- * @file	net_tcp_header.h
+ * @file	net_tcp.h
  * @author	en2
  * @date	15-09-2022
  * @brief	
  * @details	
 **/
 
-#include "net_generic.h"
-#include "net_tcp_type.h"
+#include "net_generic_bytes.h"
+#include "net_generic_bits.h"
 
 namespace net::tcp
 {
+
+/* ---------------------------------------------| header |--------------------------------------------- */
 
 class Header
 {
@@ -46,4 +48,5 @@ public:
 
 }; /* namespace: net::tcp */
 
-#endif /* define: net_tcp_header_h */
+
+#endif /* define: net_tcp_h */

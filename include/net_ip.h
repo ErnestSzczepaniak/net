@@ -1,20 +1,48 @@
-#ifndef _net_ip_header_h
-#define _net_ip_header_h
+#ifndef _net_ip_h
+#define _net_ip_h
 
 /**
- * @file	net_ip_header.h
+ * @file	net_ip.h
  * @author	en2
  * @date	14-09-2022
  * @brief	
  * @details	
 **/
 
-#include "net_generic.h"
-#include "net_ip_address.h"
-#include "net_ip_type.h"
+#include "net_generic_bytes.h"
+#include "net_generic_bits.h"
+#include "net_generic_address.h"
 
 namespace net::ip
 {
+
+/* ---------------------------------------------| address |--------------------------------------------- */
+
+namespace address
+{
+
+using Custom = generic::Address<4, 0x2e, 10>;
+
+}; /* namespace: address */
+
+/* ---------------------------------------------| type |--------------------------------------------- */
+
+enum class Protocol : unsigned char
+{
+    ICMP = 0x01,
+    TCP = 0x06,
+    UDP = 0x11
+}; /* enum: Protocol */
+
+enum class Ecn : unsigned char
+{
+    NON_ECN_CAPABLE_TRANSPORT = 0x00,
+    ECN_CAPABLE_0_TRANSPORT = 0x01,
+    ECN_CAPABLE_1_TRANSPORT = 0x02,
+    CONGESTION_ENCOUNTERED_TRANSPORT = 0x03
+}; /* enum: Ecn */
+
+/* ---------------------------------------------| header |--------------------------------------------- */
 
 class Header
 {
@@ -43,4 +71,4 @@ public:
 
 }; /* namespace: net::ip */
 
-#endif /* define: net_ip_header_h */
+#endif /* define: net_ip_h */

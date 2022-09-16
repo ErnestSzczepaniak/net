@@ -1,12 +1,7 @@
 # ---------------------------------------------| source |--------------------------------------------- #
 
 set(source_extension            )
-set(source_common               source/generic/
-                                source/eth/
-                                source/ip/
-                                source/tcp/
-                                source/udp/
-                                source/arp/
+set(source_common               source/
                                 )
 set(source_target               )
 set(source_host                 )
@@ -33,12 +28,7 @@ set(private_option_host         )
 
 # ---------------------------------------------| include |--------------------------------------------- #
 
-set(public_include_common       include/generic/
-                                include/eth/
-                                include/ip/
-                                include/tcp/
-                                include/udp/
-                                include/arp/
+set(public_include_common       include/
                                 )
 set(public_include_target       )
 set(public_include_host         )

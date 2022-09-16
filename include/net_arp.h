@@ -1,21 +1,37 @@
-#ifndef _net_arp_header_h
-#define _net_arp_header_h
+#ifndef _net_arp_h
+#define _net_arp_h
 
 /**
- * @file	net_arp_header.h
+ * @file	net_arp.h
  * @author	en2
  * @date	15-09-2022
  * @brief	
  * @details	
 **/
 
-#include "net_generic.h"
+#include "net_generic_bytes.h"
 #include "net_eth.h"
 #include "net_ip.h"
-#include "net_arp_type.h"
 
 namespace net::arp
 {
+
+/* ---------------------------------------------| type |--------------------------------------------- */
+
+enum class Hardware_type : unsigned short int
+{
+    ETHERNET = 0x0001
+}; /* enum: Hardware_type */
+
+enum class Operation : unsigned short int
+{
+    REQUEST = 0x0001,
+    REPLY = 0x0002,
+    REVERSE_REQUEST = 0x0003,
+    REVERSE_REPLY = 0x0004
+}; /* enum: Operation */
+
+/* ---------------------------------------------| header |--------------------------------------------- */
 
 class Header
 {
@@ -37,4 +53,4 @@ public:
 
 }; /* namespace: net::arp */
 
-#endif /* define: net_arp_header_h */
+#endif /* define: net_arp_h */

@@ -1,4 +1,4 @@
-#include "net_eth_header.h"
+#include "net_eth.h"
 
 namespace net::eth
 {

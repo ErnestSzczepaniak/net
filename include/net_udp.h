@@ -1,18 +1,20 @@
-#ifndef _net_udp_header_h
-#define _net_udp_header_h
+#ifndef _net_udp_h
+#define _net_udp_h
 
 /**
- * @file	net_udp_header.h
+ * @file	net_udp.h
  * @author	en2
  * @date	15-09-2022
  * @brief	
  * @details	
 **/
 
-#include "net_generic.h"
+#include "net_generic_bytes.h"
 
 namespace net::udp
 {
+
+/* ---------------------------------------------| header |--------------------------------------------- */
 
 class Header
 {
@@ -33,4 +35,4 @@ public:
 
 }; /* namespace: net::udp */
 
-#endif /* define: net_udp_header_h */
+#endif /* define: net_udp_h */
