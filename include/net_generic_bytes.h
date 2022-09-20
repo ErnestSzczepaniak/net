@@ -80,9 +80,12 @@ auto Bytes<T, byte, reverse>::_load() const
 template<typename T, int byte, bool reverse>
 void Bytes<T, byte, reverse>::_store(const T & value)
 {
-    if constexpr (reverse) value = _invert(value);
-
-    memcpy(&_buffer[byte], &value, sizeof(T));
+    if constexpr (reverse)
+    {
+        auto temp = _invert(value);   
+        memcpy(&_buffer[byte], &temp, sizeof(T));
+    }
+    else memcpy(&_buffer[byte], &value, sizeof(T));
 }
 
 template<typename T, int byte, bool reverse>
