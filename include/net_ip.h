@@ -11,7 +11,7 @@
 
 #include "net_generic_bytes.h"
 #include "net_generic_bits.h"
-#include "net_generic_address.h"
+#include "net_generic_stream.h"
 
 namespace net::ip
 {
@@ -21,9 +21,27 @@ namespace net::ip
 namespace address
 {
 
-using Custom = generic::Address<4, 0x2e, 10>;
+using Custom = generic::Stream<4, 0x2e, 10, false>;
 
 }; /* namespace: address */
+
+/* ---------------------------------------------| netmask |--------------------------------------------- */
+
+namespace netmask
+{
+
+using Custom = generic::Stream<4, 0x2e, 10, false>;
+
+}; /* namespace: netmask */
+
+/* ---------------------------------------------| wildcard |--------------------------------------------- */
+
+namespace wildcard
+{
+
+using Custom = generic::Stream<4, 0x2e, 10, true>;
+
+}; /* namespace: wildcard */
 
 /* ---------------------------------------------| type |--------------------------------------------- */
 

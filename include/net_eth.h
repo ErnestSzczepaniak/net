@@ -10,7 +10,7 @@
 **/
 
 #include "net_generic_bytes.h"
-#include "net_generic_address.h"
+#include "net_generic_stream.h"
 
 namespace net::eth
 {
@@ -20,7 +20,7 @@ namespace net::eth
 namespace address
 {
 
-using Custom = generic::Address<6, 0x3a, 16>;
+using Custom = generic::Stream<6, 0x3a, 16, false>;
 
 }; /* namespace: net::eth::address */
 
