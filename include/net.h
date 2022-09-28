@@ -15,6 +15,7 @@
 #include "net_udp.h"
 #include "net_arp.h"
 #include "net_icmp.h"
-#include "net_acl.h"
+#include "net_spd.h"
+#include "net_esp.h"
 
 #endif /* define: net_h */

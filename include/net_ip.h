@@ -49,7 +49,8 @@ enum class Protocol : unsigned char
 {
     ICMP = 0x01,
     TCP = 0x06,
-    UDP = 0x11
+    UDP = 0x11,
+    ESP = 0x32
 }; /* enum: Protocol */
 
 enum class Ecn : unsigned char

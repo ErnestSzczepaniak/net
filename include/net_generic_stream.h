@@ -23,7 +23,7 @@ public:
     Stream(const char * value);
     ~Stream();
 
-    bool operator==(const Stream & other);
+    bool operator==(const Stream & other) const;
 
 protected:
     unsigned char _pop(const char * value, int index);
@@ -53,7 +53,7 @@ Stream<size, separator, base, invert>::~Stream()
 }
 
 template<int size, char separator, int base, bool invert>
-bool Stream<size, separator, base, invert>::operator==(const Stream & other)
+bool Stream<size, separator, base, invert>::operator==(const Stream & other) const
 {
     return memcmp(_data, other._data, size) == 0;
 }
