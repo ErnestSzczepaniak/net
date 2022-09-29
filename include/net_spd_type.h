@@ -103,20 +103,20 @@ struct Group_address
     net::ip::address::Custom wildcard;
 }; /* structure: Group_address */
 
-struct Direction
+struct Group_direction
 {
     net::ip::address::Custom address;
     net::ip::address::Custom wildcard;
     Group_port port;
-}; /* structure: Direction */
+}; /* structure: Group_direction */
 
 struct Policy
 {
     int sequence_number = -1;
     Condition condition = Condition::UNKNOWN;
     Protocol protocol = Protocol::UNKNOWN;
-    Direction source;
-    Direction destination;
+    Group_direction source;
+    Group_direction destination;
     Precedence precedence = Precedence::UNKNOWN;
     Dscp dscp = Dscp::UNKNOWN;
     bool log = false;

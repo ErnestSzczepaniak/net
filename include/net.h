@@ -16,6 +16,7 @@
 #include "net_arp.h"
 #include "net_icmp.h"
 #include "net_spd.h"
+#include "net_sad.h"
 #include "net_esp.h"
 
 #endif /* define: net_h */

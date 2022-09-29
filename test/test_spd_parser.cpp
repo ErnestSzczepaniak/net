@@ -1,13 +1,13 @@
 #include "test.h"
 #include "net.h"
 
-TEST_CASE("test spd parse")
+TEST_CASE("test spd parser")
 {
     auto * record = "10 permit ip host 127.0.0.1 eq 80 192.168.1.1 255.255.255.255 range 0 38 precedence match dscp ef log";
 
-    net::spd::Parse parse;
+    net::spd::Parser parser;
 
-    auto policy = parse.policy((char *) record);
+    auto policy = parser.parse((char *) record);
 
     REQUIRE(policy.sequence_number == 10);
     REQUIRE(policy.condition == net::spd::Condition::PERMIT);

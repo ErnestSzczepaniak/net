@@ -26,5 +26,4 @@ TEST_CASE("test esp")
     REQUIRE(header_esp.sequence_number == 0x00000009);
 }
 
-auto i = "inbound 10.10.10.2 10.10.10.1 192.168.0.2 192.168.1.1 0x64548484 0x00000002 60 2048";
-auto o = "outbound 10.10.10.1 10.10.10.2 192.168.0.1 192.168.1.2 0xa22312d1 0x00000009 60 2048";
+

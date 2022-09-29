@@ -14,50 +14,56 @@ Instance::~Instance()
 
 }
 
-bool Instance::add(char * policy)
+bool Instance::add(char * record)
 {
-    memcpy(_policy[_count++], policy, strlen(policy));
+    auto policy = _parser.parse(record);
+
+    for (int i = 0; i < _count; i++)
+    {
+        if (_policy[i].sequence_number == policy.sequence_number) return false;
+        if (_policy[i].sequence_number < policy.sequence_number) continue;
+
+        for (int j = 0; j < _count - i; j++) _policy[_count - j] = _policy[_count - j - 1];
+
+        _policy[i] = policy;
+        _count++;
+
+        return true;
+    }
+
+    _policy[_count++]  = policy;
 
     return true;
 }
 
-bool Instance::remove(int priority)
+bool Instance::remove(int sequence_number)
 {
-    return true;
+    for (int i = 0; i < _count; i++)
+    {
+        if (_policy[i].sequence_number != sequence_number) continue;
+
+        for (int j = 0; j < _count - i; j++) _policy[i + j] = _policy[i + j + 1];
+
+        _count--;
+
+        return true;
+    }
+
+    return false;
 }
 
-bool Instance::check(unsigned char * buffer)
+Instance::Result_check Instance::check(unsigned char * buffer)
 {
     auto header_eth = net::eth::Header(buffer);
     auto header_ip = net::ip::Header(header_eth.payload);
 
     for (int i = 0; i < _count; i++)
     {
-        auto policy = _parse.policy(_policy[i]);
-
-        if (auto result = _verify_protocol(header_ip, policy.protocol); result == false) continue;
 
 
-
-
-        return policy.condition == Condition::PERMIT;
     }
     
-    return false;
-}
-
-/* ---------------------------------------------| private |--------------------------------------------- */
-
-bool Instance::_verify_protocol(ip::Header & header, Protocol protocol)
-{
-    if (protocol == Protocol::IP && header.protocol == ip::Protocol::TCP) return true;
-    else if (protocol == Protocol::IP && header.protocol == ip::Protocol::UDP) return true;
-    else if (protocol == Protocol::IP && header.protocol == ip::Protocol::ICMP) return true;
-    else if (protocol == Protocol::TCP && header.protocol == ip::Protocol::TCP) return true;
-    else if (protocol == Protocol::UDP && header.protocol == ip::Protocol::UDP) return true;
-    else if (protocol == Protocol::ICMP && header.protocol == ip::Protocol::ICMP) return true;
-
-    return false;
+    return {};
 }
 
 }; /* namespace: net::spd */

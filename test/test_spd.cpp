@@ -15,7 +15,5 @@ TEST_CASE("test acl")
 
     spd.add("10 permit ip host 127.0.0.1 eq 80 192.168.1.1 255.255.255.255 range 0 38");
 
-    auto result = spd.check(buffer);
-
-    REQUIRE(result == true);
+    auto [result, policy] = spd.check(buffer);
 }

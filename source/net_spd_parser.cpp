@@ -1,19 +1,19 @@
-#include "net_spd_parse.h"
+#include "net_spd_parser.h"
 
 namespace net::spd
 {
 
-Parse::Parse()
+Parser::Parser()
 {
 
 }
 
-Parse::~Parse()
+Parser::~Parser()
 {
 
 }
 
-Policy Parse::policy(char * policy)
+Policy Parser::parse(char * policy)
 {
     Policy result;
 
@@ -46,68 +46,12 @@ Policy Parse::policy(char * policy)
     return result;
 }
 
-char * Parse::_word_point(char * policy, int index)
-{
-    if (index == 0) return policy;
-
-    int count = 0;
-    int length = strlen(policy);
-
-    for (int i = 0; i < length; i++)
-    {
-        if (policy[i] == ascii_space) count++;
-
-        if (count == index) return &policy[i + 1];
-    }
-
-    return nullptr;
-}
-
-bool Parse::_word_matches(char * policy, int index, const char * value)
-{
-    auto * word = _word_point(policy, index);
-
-    if (word == nullptr) return false;
-
-    return strncmp(word, value, strlen(value)) == 0;
-}
-
-bool Parse::_word_present(char * policy, const char * value)
-{
-    auto length = strlen(policy);
-    auto value_length = strlen(value);
-
-    for (int i = 0; i < length; i++)
-    {
-        if (strncmp(&policy[i], value, value_length) == 0) return true;
-    }
-
-    return false;
-}
-
-int Parse::_word_index(char * policy, const char * value)
-{
-    auto counter = 0;
-
-    auto length = strlen(policy);
-    auto value_length = strlen(value);
-
-    for (int i = 0; i < length; i++)
-    {
-        if (strncmp(&policy[i], value, value_length) == 0) return counter;
-
-        if (policy[i] == ascii_space) counter++;
-    }
-
-    return -1;
-}
-
-int Parse::_sequence_number(char * policy)
+int Parser::_sequence_number(char * policy)
 {
     return _word_cast<int>(policy, 0);
 }
 
-Condition Parse::_condition(char * policy)
+Condition Parser::_condition(char * policy)
 {
     if (_word_matches(policy, 1, "permit")) return Condition::PERMIT;
     else if (_word_matches(policy, 1, "deny")) return Condition::DENY;
@@ -115,7 +59,7 @@ Condition Parse::_condition(char * policy)
     return Condition::UNKNOWN;
 }
 
-Protocol Parse::_protocol(char * policy)
+Protocol Parser::_protocol(char * policy)
 {
     if (_word_matches(policy, 2, "ahp")) return Protocol::AHP;
     else if (_word_matches(policy, 2, "esp")) return Protocol::ESP;
@@ -135,7 +79,7 @@ Protocol Parse::_protocol(char * policy)
     return Protocol::UNKNOWN;
 }
 
-Parse::Result_address Parse::_group_address(char * policy, int index)
+Parser::Result_address Parser::_group_address(char * policy, int index)
 {
     Group_address result;
 
@@ -164,7 +108,7 @@ Parse::Result_address Parse::_group_address(char * policy, int index)
     return {result, index};
 }
 
-Parse::Result_port Parse::_group_port(char * policy, int index)
+Parser::Result_port Parser::_group_port(char * policy, int index)
 {
     Group_port result;
 
@@ -191,7 +135,7 @@ Parse::Result_port Parse::_group_port(char * policy, int index)
     return {result, index};
 }
 
-Precedence Parse::_precedence(char * policy)
+Precedence Parser::_precedence(char * policy)
 {
     auto present = _word_present(policy, "precedence");
 
@@ -211,7 +155,7 @@ Precedence Parse::_precedence(char * policy)
     return Precedence::UNKNOWN;
 }
 
-Dscp Parse::_dscp(char * policy)
+Dscp Parser::_dscp(char * policy)
 {
     auto present = _word_present(policy, "dscp");
 
@@ -244,7 +188,7 @@ Dscp Parse::_dscp(char * policy)
     return Dscp::UNKNOWN;
 }
 
-bool Parse::_log(char * policy)
+bool Parser::_log(char * policy)
 {
     return _word_present(policy, "log");
 }
